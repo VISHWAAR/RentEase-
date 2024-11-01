@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Rental Price Prediction</title>
+    <style>
+        body{
+        /* background-image:url("{% static 'app/images/bg.jpg' %}"); */
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position:center center;
+        justify-content: center;
+        overflow-x: hidden;
+    }
+    
+    form{
+        margin:auto;
+        border-radius:8px;
+        margin:auto;
+        border:2.5px dashed darkblue;
+        height:100%;
+        width: max-content;
+        width:40%;
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: column;
+        margin-top:2%;
+        margin-bottom:2%;
+        
+    }
+    .container{
+        border:1px solid white;
+        /* background:indianred; */
+        background:linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.55),rgba(255,255,255,0.6),rgba(255,255,255,0.65));
+        backdrop-filter:blur(10px);
+        flex-direction: row;
+        height:100%;
+        width:98%;
+        display: flex;
+        justify-content: space-evenly;
+        margin:auto;
+    }
+    .container .info{
+        width:40%;
+        text-align: justify;
+    }
+    .inputbox{
+        margin:0% auto 0% auto;
+        position:relative;
+        width:75%;
+    }
+    .inputbox input{
+        height:5vh;
+        width:90%;
+        margin:2% 4%;
+        border-radius:4px;
+        outline:none;
+        border-width:0.1px;
+    }
+    .inputbox label{
+        position:absolute;
+        left:8%;
+        top:32%;
+        color:grey;
+        pointer-events: none;
+        transition: 0.5s;
+    }
+    .inputbox input:focus{
+        border-color:blue;
+    }
+    
+    .inputbox input:valid ~ label,.inputbox input:focus ~ label{
+        color:grey;
+        top:-20%;
+        margin-left:8%;
+        border:none;
+        padding:0.5% 1% 0.5% 1%;
+        border-radius:8px;
+        background:white;
+
+
+    }
+    .inputbox input:focus ~ label{
+        color:blue;
+        border:0.2px solid blue;
+
+        
+    }
+    .container button{
+        background:transparent;
+        border:1px solid white;
+        border-radius:20px;
+        background:linear-gradient(rgba(57, 234, 57, 0.7),rgba(10, 103, 10,0.75));
+        padding:1% 3%;
+        font-size:1.3vw;
+        width:max-content;
+        color:white;
+        transition: 0.5s;
+        margin:auto;
+        margin-top:5%;
+        font-size:2vw;
+    }
+    .container button:hover{
+        cursor:pointer;
+        background: green;
+        color:white;
+        letter-spacing:1.5px;
+    }
+    .nav{
+        position: fixed;
+        z-index:11000;
+        width:100%;
+        display:flex;
+        justify-content: space-evenly;
+        height:10vh;
+        background: #333;
+    }
+    body{
+        margin:0;
+        padding:0;
+        overflow-x: hidden;
+    }
+    p{
+        color:black;
+        font-size:5vw;
+        font-weight:800;
+        margin: 0 auto;
+    }
+    .results{
+        width:95%;
+        margin:auto;
+        height:40vh;
+        background:white;
+        border:1px solid black;
+        border-radius:8px;
+        box-shadow:2px 2px 10px 2px black;
+    }
+    .disp{
+        box-shadow:2px 2px 10px 4px black;
+        margin:auto;
+        border-radius:8px;
+    }
+    @keyframes open{
+        from{
+            opacity:0;
+        }to{
+            opacity:1;
+        }
+    }
+    
+    .image,.image2{
+        background-image:url("{% static 'app/images/bg.jpg' %}");
+        width:40vw;
+        border-radius:8px;
+        box-shadow:2px 2px 10px 4px black;
+        background-repeat: no-repeat;
+        background-size: cover;
+        animation-name:open;
+        animation-duration:2s;
+        animation-fill-mode: forwards;
+        margin:auto;
+        height:60vh;
+        background-position: center;
+    }
+    .image2{
+        background-image:url("{% static 'app/images/img.jpeg' %}");
+    }
+    form select{
+        margin:auto;
+        height:8vh;
+        border-radius:8px;
+        margin-left:4%;
+        width:98%;
+
+    }
+    .results{
+        display:flex;
+        justify-content: space-evenly;
+        width:98%;
+        height:100%;
+    }
+    .results div h5{
+        margin:0;
+        padding:0;
+    }
+    .results div{
+        width:40%;
+        background:white;
+        border-radius:8px;
+        border:2px dashed red;
+        height:98%;
+        margin:auto;
+        margin-top:2%;
+
+    }
+    .results div h3{
+        margin-left:5%;
+        margin-top:0.5%;
+    }
+    .results .rent h4{
+        font-size:3vw;
+        color:green;
+    }
+    .nav img{
+        height:80%;
+        margin-top:.2%;
+    }
+    .nav h4{
+        color:white;
+        margin:auto;
+        font-size:2vw;
+    }
+    .nav2 {
+    background-color: #333;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    position: fixed;
+    width:100%;
+    z-index:12000;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 10px;
+}
+.brand-name {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.nav2 ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav2 li {
+    display: inline;
+}
+
+.signout-btn {
+    background-color: #f44336; 
+    color: white; 
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin:5%;
+    width: max-content;
+    margin-left:-5%;
+    transition: background-color 0.3s ease;
+}
+
+.signout-btn:hover {
+    background-color: #d32f2f; 
+}
+    </style>
+</head>
+<body>
+    <nav class="nav2">
+        <div class="logo-container">
+            <img src="{%static 'app/images/logo.png' %}" alt="Logo" class="logo">
+            <span class="brand-name">RentEase</span>
+        </div>
+
+        <ul>
+            <li><button  class="signout-btn">Sign Out</button></li>
+        </ul>
+    </nav>
+    <br><br><br><br><br>
+    <div class="container">
+        <div class="info">
+            "In the vast tapestry of urban life, every home tells a story waiting to unfold. To craft the perfect prediction of your future dwelling’s value, I invite you to share a few key details from the chapters of this journey:
+
+            The year your heart first imagines moving in—what is this pivotal year?<br>
+            The number of rooms that will witness laughter, conversations, and restful nights (BHK count).<br>
+            The size of the space that will shelter your dreams and aspirations (in square feet).<br>
+            The floor upon which your abode shall stand—whether it’s reaching for the skies or nestled close to the earth.<br>
+            The name of the locality, the neighborhood that cradles this haven, where streets whisper secrets of community and belonging.<br>
+            And finally, the range of rent that dances in your thoughts—a humble start to a grand future.<br>
+            With these pieces, like the stars aligning in a cosmic dance, we shall unveil the price of the dwelling that calls your name."<br>
+        </div>
+        <div class="image2"></div>
+    </div>
+    <div class="container">
+        <div class="image"></div>
+        <form method="post">
+            {% csrf_token %}
+            <br>
+            <div class="inputbox">
+                {{ form.year }}
+                <label>Year</label>
+            </div>
+            <div class="inputbox">
+                {{ form.bhk }}
+                <label>BHK</label>
+            </div>
+            <div class="inputbox">
+                {{ form.size }}
+                <label>Size</label>
+            </div>
+            <div class="inputbox">
+                {{ form.current_floor }}
+                <label>Current Floor</label>
+            </div>
+            <div class="inputbox">
+                {{ form.bathrooms }}
+                <label>Bathrooms</label>
+            </div>
+            <div class="inputbox">
+                {{ form.area_locality }}
+                <label>Area Locality</label>
+            </div>
+            <div class="inputbox">
+                {{ form.city }}
+                <label>City</label>
+            </div>
+            <div class="inputbox">
+                {{ form.furnished_status }}
+            </div>
+            <center><button id='submit' type="submit">Predict</button></center><br>
+        </form>
+    </div><br>
+
+    <div class="result">
+        <center><h2 id="results">Get your results here</h2></center>
+        <div style='display:none;' class="disp">
+            <h5>BHK : {{bhk}}</h5>
+            <h5>Size : {{size}}</h5>
+            <h5>Current Floor : {{current_floor}}</h5>
+            <h5>Bathrooms : {{bathrooms}}</h5>
+            <h5>Area Locality : {{area_locality}}</h5>
+            <h5>City : {{city}}</h5>
+            <h5>Furnished Status : {{form.furnised_status}}</h5>
+            <h4>Predicted Rent : {{predicted_rent}}</h4>
+            
+        </div>
+
+    </div>
+    
+        
+</body>
+<script>
+    // document.getElementById("fakesubmit").onclick=function(){
+    //     document.getElementById("submit").click();
+    // }
+    const predicted_rent="{{predicted_rent}}"
+    //predicted_rent=31578.0;
+    if (predicted_rent){
+        console.log(predicted_rent)
+        document.getElementById("results").remove()
+        let results=document.createElement("div")
+        results.setAttribute("class","results");
+        results.innerHTML=`
+            <div>
+                <h3>BHK : {{values.bhk}}</h3>
+                <h3>Size : {{values.size}}</h3>
+                <h3>Current Floor : {{values.current_floor}}</h3>
+                <h3>Bathrooms : {{values.bathrooms}}</h3>
+                <h3>Area Locality : {{values.area_locality}}</h3>
+                <h3>City : {{values.city}}</h3>
+                <h3>Furnished Status : {{values.furnished_status}}</h3>
+            </div>
+            <div class='rent'>
+                <center><h1>Predicted House Rent</h1></center>
+                <center><h4>{{predicted_rent}}</h4></center>
+            </div>
+        `;
+        document.getElementsByClassName("result")[0].appendChild(results);
+        document.getElementsByClassName("result")[0].scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"})
+    }
+    document.getElementsByClassName("signout-btn")[0].onclick=function(){
+        console.log('hi')
+        window.location.href="{%url 'logout' %}"
+    }
+</script>
+</html>

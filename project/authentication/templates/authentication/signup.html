@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>Signup</title>
+</head>
+<style>
+    body{
+        background-image:url("{% static 'authentication/images/signup.jpeg' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position:center center;
+        justify-content: center;
+    }
+    form{
+        margin:auto;
+        border-radius:8px;
+        border:1px solid white;
+        background:linear-gradient(rgba(255,255,255,0.2),rgba(255,255,255,0.15),rgba(255,255,255,0.1),rgba(255,255,255,0.05));
+        backdrop-filter:blur(10px);
+        height:70vh;
+        width: max-content;
+        width:30vw;
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: column;
+    }
+    .inputbox{
+        margin:0% auto 0% auto;
+        position:relative;
+        width:75%;
+    }
+    .inputbox input{
+        height:6vh;
+        width:90%;
+        margin:2% 4%;
+        border-radius:8px;
+        outline:none;
+        border-width:0.1px;
+    }
+    .inputbox label{
+        position:absolute;
+        left:8%;
+        top:32%;
+        color:grey;
+        pointer-events: none;
+        transition: 0.5s;
+    }
+    .inputbox input:focus{
+        border-color:blue;
+    }
+    
+    .inputbox input:valid ~ label,.inputbox input:focus ~ label{
+        color:grey;
+        top:-20%;
+        margin-left:8%;
+        border:none;
+        padding:0.5% 1% 0.5% 1%;
+        border-radius:8px;
+        background:white;
+
+
+    }
+    .inputbox input:focus ~ label{
+        color:blue;
+        border:0.2px solid blue;
+
+        
+    }
+    form button{
+        background:transparent;
+        border:1px solid white;
+        border-radius:20px;
+        padding:2% 5%;
+        font-size:1.3vw;
+        width:max-content;
+        margin:0.5% auto;
+        color:white;
+        transition: 0.5s;
+    }
+    form button:hover{
+        cursor:pointer;
+        background: white;
+        color:black;
+    }
+</style>
+<body>
+    <br><br><br><br>
+    <center><h2 style="color:white;">Sign up</h2></center>
+    <form method="post">
+        {% csrf_token %}
+        <div class="inputbox">
+            {{ form.username }}  
+            <label>Username</label>
+        </div>
+    
+        <div class="inputbox">
+            {{ form.password1 }}  
+            <label>Password</label>
+        </div>
+    
+        <div class="inputbox">
+            {{ form.password2 }}  
+            <label>Confirm Password</label>
+        </div>
+    
+        <button type="submit">Sign Up</button>
+    </form>
+</body>
+<script>
+    document.getElementsByName("password1")[0].setAttribute("required","required")
+    document.getElementsByName("password2")[0].setAttribute("required","required")
+</script>
+</html>
